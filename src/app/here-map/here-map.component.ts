@@ -17,11 +17,9 @@ export class HereMapComponent implements OnInit {
     @ViewChild("map")
     public mapElement: ElementRef;
 
-    @Input()
-    public appId: any;
+    public appId = "9eCYLcch1N6RN5sLPNTw";
 
-    @Input()
-    public appCode: any;
+    public appCode = "fqyDW0mXNeK4vXYo_Cis4w";
 
     @Input()
     public lat: any;
@@ -35,6 +33,9 @@ export class HereMapComponent implements OnInit {
     @Input()
     public height: any;
 
+    @Input()
+    public def: String;
+
     public constructor() { }
 
     public ngOnInit() {
@@ -45,7 +46,22 @@ export class HereMapComponent implements OnInit {
       this.search = new H.places.Search(this.platform.getPlacesService());
   }
 
+  public ngDoCheck(){
+
+    //check if current location is given and set the center
+    if(this.def.match("1")){
+      //console.log("check");
+      this.def = "0";
+      this.map.setCenter({lat: this.lat, lng: this.lng});
+      this.map.setZoom(15);
+
+      this.dropCurrentLocationMarker({lat: this.lat, lng: this.lng},"Your Location... Mate");
+
+    }
+  }
+
   public ngAfterViewInit() {
+    //console.log("afterview");
     let defaultLayers = this.platform.createDefaultLayers();
     this.map = new H.Map(
         this.mapElement.nativeElement,
@@ -81,5 +97,17 @@ private dropMarker(coordinates: any, data: any) {
   }, false);
   this.map.addObject(marker);
   }
+
+  private dropCurrentLocationMarker(coordinates: any, data: any) {
+    let marker = new H.map.Marker(coordinates);
+    marker.setData("<p>" + data + "</p>");
+    marker.addEventListener('tap', event => {
+        let bubble =  new H.ui.InfoBubble(event.target.getPosition(), {
+            content: event.target.getData()
+        });
+        this.ui.addBubble(bubble);
+    }, false);
+    this.map.addObject(marker);
+    }
 
 }
