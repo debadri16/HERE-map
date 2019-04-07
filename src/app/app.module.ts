@@ -3,18 +3,21 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from "@angular/forms";
 
 import { AppComponent } from './app.component';
-import { HereMapComponent } from './here-map/here-map.component';
+import { MapComponent } from './map/map.component';
+import { SearchMapComponent } from './search-map/search-map.component';
+import { MapService } from './map/map.service';
 
 @NgModule({
     declarations: [
         AppComponent,
-        HereMapComponent
+        MapComponent,
+        SearchMapComponent
     ],
     imports: [
         BrowserModule,
         FormsModule
     ],
-    providers: [],
+    providers: [MapService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

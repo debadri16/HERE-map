@@ -1,13 +1,8 @@
-<div style="padding: 10px 0">
-  <input type="text" placeholder="Search places..." [(ngModel)]="query" />
-  <button (click)="map.places(query)">Search</button>
+<div class="container-fluid">
+  <div class="row" style="height: 100vh;">
+    <div class="col-md-12">
+    <app-search-map></app-search-map>
+    <app-map></app-map>
+  </div>
+  </div>
 </div>
-
-<here-map
-  #map
-  [lat]="lat"
-  [lng]="lng"
-  width="100%"
-  height="835px"
-  def="0">
-</here-map>
