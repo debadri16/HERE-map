@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
 import { SearchMapComponent } from './search-map/search-map.component';
 import { MapService } from './map/map.service';
+import { NearbyShopsComponent } from './nearby-shops/nearby-shops.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         MapComponent,
-        SearchMapComponent
+        SearchMapComponent,
+        NearbyShopsComponent
     ],
     imports: [
         BrowserModule,

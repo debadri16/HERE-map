@@ -14,6 +14,9 @@ export class MapComponent implements OnInit {
   platform: any;
   map: any;
 
+  //if current location access is granted
+  private isCurrentLocation = 0;
+
   @ViewChild("map") public mapElement: ElementRef;
 
   //appid ar code backend e dite hbe, pore dekha jabe
@@ -26,6 +29,7 @@ export class MapComponent implements OnInit {
         this.map.setCenter({ lat: this.mapService.lat, lng: this.mapService.lng });
         this.map.setZoom(15);
         this.dropCurrentLocationMarker({ lat: this.mapService.lat, lng: this.mapService.lng }, "Your Location... Mate");
+        this.isCurrentLocation = 1;
       }
     );
     this.mapService.onSearch.subscribe(
@@ -60,6 +64,9 @@ export class MapComponent implements OnInit {
 
   public places(query: string) {
     this.map.removeObjects(this.map.getObjects());
+    if (this.isCurrentLocation === 1) {
+      this.dropCurrentLocationMarker({ lat: this.mapService.lat, lng: this.mapService.lng }, "Your Location... Mate");
+    }
     this.search.request({ "q": query, "at": this.mapService.lat + "," + this.mapService.lng }, {}, data => {
       for (let i = 0; i < data.results.items.length; i++) {
         this.dropMarker({ "lat": data.results.items[i].position[0], "lng": data.results.items[i].position[1] }, data.results.items[i]);
@@ -82,7 +89,11 @@ export class MapComponent implements OnInit {
   }
 
   private dropCurrentLocationMarker(coordinates: any, data: any) {
-    let marker = new H.map.Marker(coordinates);
+    var pngIcon = new H.map.Icon("http://icons.iconarchive.com/icons/paomedia/small-n-flat/512/map-marker-icon.png", { size: { w: 40, h: 40 } });
+    let marker = new H.map.Marker(coordinates,
+      {
+        icon: pngIcon
+      });
     marker.setData("<p>" + data + "</p>");
     marker.addEventListener('tap', event => {
       let bubble = new H.ui.InfoBubble(event.target.getPosition(), {
