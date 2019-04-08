@@ -9,8 +9,9 @@ import { MapService } from './map/map.service';
 export class AppComponent {
   
   constructor(private mapService: MapService) {
-    this.mapService.lat = "41.3851";
-    this.mapService.lng = "2.1734";
+    //marcus hill(dick) location
+    this.mapService.lat = "-38.2593118";
+    this.mapService.lng = "144.5779386";
     this.getLocation();
   }
 

@@ -9,14 +9,22 @@ import { MapService } from '../map/map.service';
 export class SearchMapComponent implements OnInit {
 
   query: string;
+  public selectedFilter: string = "Filters";
 
-  constructor(private mapServie: MapService) { }
+
+  constructor(private mapService: MapService) { }
 
   ngOnInit() {
   }
 
-  onSearch(query) {
-    this.mapServie.onSearch.emit(query);
+  //location search bar
+  onClickSearch(query) {
+    this.mapService.onSearch.emit(query);
+  }
+
+  //filters
+  onSelectFilter(filter: string){
+    this.selectedFilter = filter;
   }
 
 }

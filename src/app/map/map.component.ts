@@ -50,7 +50,7 @@ export class MapComponent implements OnInit {
       this.mapElement.nativeElement,
       defaultLayers.normal.map,
       {
-        zoom: 10,
+        zoom: 16,
         center: { lat: this.mapService.lat, lng: this.mapService.lng }
       }
     );
