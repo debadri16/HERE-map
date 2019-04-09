@@ -7,15 +7,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListviewComponent implements OnInit {
 
-  constructor() {this.closeBtnClick = true; }
+  constructor() { }
 
-  ngOnInit() {
+  private closeBtn = true;
+
+  public ngOnInit() {
   }
 
-  public closeBtnClick: boolean;
+  public closeBtnMethod(){
+    this.closeBtn = false;
+    console.log('list view closed- ' + this.closeBtn);
+  }
 
-  onClose(){
-    this.closeBtnClick = false;
+  public openListViewMethod(){
+    this.closeBtn = true;
+    console.log('list view opened');
   }
 
 }

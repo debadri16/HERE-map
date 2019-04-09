@@ -1,7 +1,7 @@
-<div class="row" *ngIf="closeBtnClick">
+<div class="row" *ngIf="closeBtn==true">
   <div>
     <div class="card" style="background-color:aqua">
-      <button type="button" class="btn btn-block btn-primary" (click)="onClose()">Close
+      <button type="button" class="btn btn-block btn-primary" (click)="closeBtnMethod()">Close
           <i class="fas fa-times-circle pull-right" style="padding-top:5px;"></i>
       </button>
 
@@ -13,7 +13,7 @@
           <a href="#" class="btn btn-primary">See Profile</a>
         </div>
       </div>
-      
+
     </div>
   </div>
 </div>

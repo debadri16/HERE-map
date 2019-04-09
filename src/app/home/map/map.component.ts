@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MapService } from './map.service';
+import { ListviewComponent } from '../listview/listview.component';
 
 declare var H: any;
 
 @Component({
+  providers: [ListviewComponent],
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
@@ -23,7 +25,7 @@ export class MapComponent implements OnInit {
   public appId = "9eCYLcch1N6RN5sLPNTw";
   public appCode = "fqyDW0mXNeK4vXYo_Cis4w";
 
-  constructor(private mapService: MapService) {
+  constructor(private mapService: MapService, private listView: ListviewComponent) {
     this.mapService.onCurrentLocation.subscribe(
       () => {
         this.map.setCenter({ lat: this.mapService.lat, lng: this.mapService.lng });
@@ -68,6 +70,7 @@ export class MapComponent implements OnInit {
       this.dropCurrentLocationMarker({ lat: this.mapService.lat, lng: this.mapService.lng }, "Your Location... Mate");
     }
     this.search.request({ "q": query, "at": this.mapService.lat + "," + this.mapService.lng }, {}, data => {
+      this.listView.closeBtnMethod();
       for (let i = 0; i < data.results.items.length; i++) {
         this.dropMarker({ "lat": data.results.items[i].position[0], "lng": data.results.items[i].position[1] }, data.results.items[i]);
       }
