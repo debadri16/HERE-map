@@ -6,20 +6,23 @@ import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
 import { SearchMapComponent } from './search-map/search-map.component';
 import { MapService } from './map/map.service';
-import { NearbyShopsComponent } from './nearby-shops/nearby-shops.component';
+import { ShopsComponent } from './shops/shops.component';
+import { ShopsService } from './shops/shops.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     declarations: [
         AppComponent,
         MapComponent,
         SearchMapComponent,
-        NearbyShopsComponent
+        ShopsComponent
     ],
     imports: [
         BrowserModule,
-        FormsModule
+        FormsModule,
+        HttpClientModule
     ],
-    providers: [MapService],
+    providers: [MapService, ShopsService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
