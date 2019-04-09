@@ -11,6 +11,7 @@ import { ShopsService } from './home/shops/shops.service';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
+import { ListviewComponent } from './home/listview/listview.component';
 
 @NgModule({
     declarations: [
@@ -18,7 +19,8 @@ import { AppRoutingModule } from './app-routing.module';
         MapComponent,
         SearchMapComponent,
         ShopsComponent,
-        HomeComponent
+        HomeComponent,
+        ListviewComponent
     ],
     imports: [
         BrowserModule,

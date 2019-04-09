@@ -1,0 +1,11 @@
+.row {
+    margin-top: 10px;
+    margin-left: 10px;
+    position: absolute;
+    z-index: 1;
+    opacity: .75;
+    width: 30%;
+    height: 85%;
+    overflow-y: auto;
+  }
+  
