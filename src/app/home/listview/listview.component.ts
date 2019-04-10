@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-listview',
@@ -7,21 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListviewComponent implements OnInit {
 
-  constructor() { }
-
-  private closeBtn = true;
+  constructor(private router: Router){}
 
   public ngOnInit() {
   }
 
-  public closeBtnMethod(){
-    this.closeBtn = false;
-    console.log('list view closed- ' + this.closeBtn);
+  public closeListView(){
+    this.router.navigate(['/home']);
+    console.log('list view closed');
   }
 
-  public openListViewMethod(){
-    this.closeBtn = true;
-    console.log('list view opened');
-  }
 
 }

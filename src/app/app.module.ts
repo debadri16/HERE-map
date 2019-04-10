@@ -26,7 +26,7 @@ import { ListviewComponent } from './home/listview/listview.component';
         BrowserModule,
         FormsModule,
         HttpClientModule,
-        AppRoutingModule
+        AppRoutingModule,
     ],
     providers: [MapService, ShopsService],
     bootstrap: [AppComponent]
