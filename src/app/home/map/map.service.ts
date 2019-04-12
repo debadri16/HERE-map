@@ -1,4 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
+import { reject } from 'q';
 
 @Injectable({
   providedIn: 'root'
@@ -11,4 +12,6 @@ export class MapService {
 
   onCurrentLocation = new EventEmitter<{}>();
   onSearch = new EventEmitter<string>();
+  onLoaded = new EventEmitter<any>();
+
 }

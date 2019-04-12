@@ -11,7 +11,10 @@ import { ShopsService } from './home/shops/shops.service';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
 import { AppRoutingModule } from './app-routing.module';
-import { ListviewComponent } from './home/listview/listview.component';
+import { ListComponent } from './home/list/list.component';
+import { ItemsComponent } from './home/list/items/items.component';
+import { OtherComponent } from './other/other.component';
+import { MapResolver } from './home/map/map-resolver.service';
 
 @NgModule({
     declarations: [
@@ -20,7 +23,9 @@ import { ListviewComponent } from './home/listview/listview.component';
         SearchMapComponent,
         ShopsComponent,
         HomeComponent,
-        ListviewComponent
+        ListComponent,
+        ItemsComponent,
+        OtherComponent
     ],
     imports: [
         BrowserModule,
@@ -28,7 +33,7 @@ import { ListviewComponent } from './home/listview/listview.component';
         HttpClientModule,
         AppRoutingModule,
     ],
-    providers: [MapService, ShopsService],
+    providers: [MapService, ShopsService, MapResolver],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

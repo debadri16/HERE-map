@@ -35,7 +35,7 @@ export class MapComponent implements OnInit {
     );
     this.mapService.onSearch.subscribe(
       (query) => {
-        this.places(query);
+        return this.places(query);
       }
     );
   }
@@ -68,18 +68,20 @@ export class MapComponent implements OnInit {
     if (this.isCurrentLocation === 1) {
       this.dropCurrentLocationMarker({ lat: this.mapService.lat, lng: this.mapService.lng }, "Your Location... Mate");
     }
-    this.search.request({ "q": query, "at": this.mapService.lat + "," + this.mapService.lng }, {}, data => {
-      
-      //////////
-      this.router.navigate(['/home/shoplist']);
-      /////////
 
-      for (let i = 0; i < data.results.items.length; i++) {
-        this.dropMarker({ "lat": data.results.items[i].position[0], "lng": data.results.items[i].position[1] }, data.results.items[i]);
-      }
-    }, error => {
-      console.error(error);
-    });
+    this.search.request(
+      { "q": query, "at": this.mapService.lat + "," + this.mapService.lng },
+      {},
+      (data) => {
+        this.mapService.onLoaded.emit(data.results.items);
+        for (let i = 0; i < data.results.items.length; i++) {
+          this.dropMarker({ "lat": data.results.items[i].position[0], "lng": data.results.items[i].position[1] }, data.results.items[i]);
+          return data.results.items;
+        }
+      },
+      (error) => {
+        console.error(error);
+      });
   }
 
   private dropMarker(coordinates: any, data: any) {

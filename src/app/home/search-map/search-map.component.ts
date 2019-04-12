@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MapService } from '../map/map.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-map',
@@ -12,7 +13,7 @@ export class SearchMapComponent implements OnInit {
   public selectedFilter: string = "Filters";
 
 
-  constructor(private mapService: MapService) { }
+  constructor(private mapService: MapService, private router: Router) { }
 
   ngOnInit() {
   }
@@ -20,6 +21,7 @@ export class SearchMapComponent implements OnInit {
   //location search bar
   onClickSearch(query) {
     this.mapService.onSearch.emit(query);
+    this.router.navigate(['search']);
   }
 
   //filters

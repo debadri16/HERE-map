@@ -1,20 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { ListviewComponent } from './home/listview/listview.component';
+import { ListComponent } from './home/list/list.component';
+import { OtherComponent } from './other/other.component';
+import { MapResolver } from './home/map/map-resolver.service';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
-
-  { path: 'home',
-    component: HomeComponent,
-    children: [
+  {
+    path: '', component: HomeComponent, children: [
       {
-        path: 'shoplist',
-        component: ListviewComponent
+        path: 'search', component: ListComponent, resolve: {places: MapResolver}
       }
-    ]  
-  }
+    ]
+  },
+  { path: 'other', component: OtherComponent }
 ];
 
 @NgModule({
@@ -22,4 +21,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 
-export class AppRoutingModule {}
+export class AppRoutingModule { }
