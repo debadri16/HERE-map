@@ -76,8 +76,8 @@ export class MapComponent implements OnInit {
         this.mapService.onLoaded.emit(data.results.items);
         for (let i = 0; i < data.results.items.length; i++) {
           this.dropMarker({ "lat": data.results.items[i].position[0], "lng": data.results.items[i].position[1] }, data.results.items[i]);
-          return data.results.items;
         }
+        this.mapService.onLoaded.complete();
       },
       (error) => {
         console.error(error);

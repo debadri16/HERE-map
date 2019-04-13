@@ -9,7 +9,7 @@ const routes: Routes = [
   {
     path: '', component: HomeComponent, children: [
       {
-        path: 'search', component: ListComponent, resolve: {places: MapResolver}
+        path: 'search/:query', component: ListComponent, resolve: {places: MapResolver}
       }
     ]
   },

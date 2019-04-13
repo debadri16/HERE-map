@@ -9,21 +9,17 @@ import { Router, ActivatedRoute, Data } from '@angular/router';
 })
 export class ListComponent implements OnInit {
 
-  public items = [];
-  itemsLoaded = false;
+  items: any;
   constructor(private router: Router, private mapService: MapService, private route: ActivatedRoute) {
   }
 
   public ngOnInit() {
-    this.mapService.onLoaded.subscribe(
-      (data) => {
-        this.items = data;
-        if (this.items.length !== 0) {
-          this.itemsLoaded = true;
-        }
+    this.route.data.subscribe(
+      (data: Data) => {
+        console.log(data['places']);
+        this.items = data['places'];
       }
     )
-
   }
 
   public closeListView() {
