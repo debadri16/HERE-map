@@ -16,7 +16,6 @@ export class ListComponent implements OnInit {
   public ngOnInit() {
     this.route.data.subscribe(
       (data: Data) => {
-        console.log(data['places']);
         this.items = data['places'];
       }
     )

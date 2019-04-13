@@ -1,22 +1,24 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { MapService } from '../map/map.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShopsService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private mapService: MapService) { }
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
-  //API to get location
-  private locationURL = 'http://192.168.1.213:8080/admin/getAll';
-
   getShops(): Observable<any> {
-    return this.http.get(this.locationURL);
+    //API to get location
+    let getNearbyShopsURL = 'http://localhost:8080/shop/getByLocation?latitude='+this.mapService.lat+'&longitude='+this.mapService.lng;
+
+    //console.log('service log ' + this.mapService.lat + " " + this.mapService.lng);
+    return this.http.get(getNearbyShopsURL);
   }
 }
