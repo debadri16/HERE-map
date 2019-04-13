@@ -20,7 +20,7 @@ export class SearchMapComponent implements OnInit {
 
   //location search bar
   onClickSearch(query) {
-    this.router.navigate(['/search',query]);
+    this.router.navigate(['/search',this.selectedFilter,query]);
   }
 
   //filters

@@ -11,7 +11,7 @@ export class MapService {
   constructor() { }
 
   onCurrentLocation = new EventEmitter<{}>();
-  onSearch = new EventEmitter<string>();
+  onSearch = new EventEmitter<any>();
   onLoaded = new EventEmitter<any>();
 
 }

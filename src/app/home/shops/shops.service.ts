@@ -21,4 +21,12 @@ export class ShopsService {
     //console.log('service log ' + this.mapService.lat + " " + this.mapService.lng);
     return this.http.get(getNearbyShopsURL);
   }
+
+  getShopsByName(name: string): Observable<any> {
+    //API to get location
+    let getShopsByNameURL = 'http://localhost:8080/shop/getByNameLocation?name='+name+'&latitude='+this.mapService.lat+'&longitude='+this.mapService.lng;
+
+    //console.log('service log ' + this.mapService.lat + " " + this.mapService.lng);
+    return this.http.get(getShopsByNameURL);
+  }
 }

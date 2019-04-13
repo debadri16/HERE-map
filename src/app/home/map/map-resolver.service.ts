@@ -9,8 +9,8 @@ export class MapResolver implements Resolve<any>{
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any {
-        console.log(route.params['query']);    
-        this.mapService.onSearch.emit(route.params['query']);
+        console.log(route.params['filter']);    
+        this.mapService.onSearch.emit({ filter: route.params['filter'], query: route.params['query'] });
         return this.mapService.onLoaded;
     }
 }
