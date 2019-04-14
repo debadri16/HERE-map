@@ -14,7 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ListComponent } from './home/list/list.component';
 import { ItemsComponent } from './home/list/items/items.component';
 import { OtherComponent } from './other/other.component';
-import { MapResolver } from './home/map/map-resolver.service';
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 
 @NgModule({
     declarations: [
@@ -25,7 +25,8 @@ import { MapResolver } from './home/map/map-resolver.service';
         HomeComponent,
         ListComponent,
         ItemsComponent,
-        OtherComponent
+        OtherComponent,
+        LoadingSpinnerComponent
     ],
     imports: [
         BrowserModule,
@@ -33,7 +34,7 @@ import { MapResolver } from './home/map/map-resolver.service';
         HttpClientModule,
         AppRoutingModule,
     ],
-    providers: [MapService, ShopsService, MapResolver],
+    providers: [MapService, ShopsService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

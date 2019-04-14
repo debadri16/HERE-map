@@ -25,8 +25,6 @@ export class MapComponent implements OnInit {
   public appId = "9eCYLcch1N6RN5sLPNTw";
   public appCode = "fqyDW0mXNeK4vXYo_Cis4w";
 
-  public nearbyShops: any;
-
   constructor(private mapService: MapService, private router: Router, public shopService: ShopsService) {
     this.mapService.onCurrentLocation.subscribe(
       () => {
@@ -38,22 +36,22 @@ export class MapComponent implements OnInit {
         //nearby shops details load near current location
         this.shopService.getShops().subscribe(
           (res) => {
-            this.nearbyShops = res;
-            //console.log(res);
-            for (let i = 0; i < this.nearbyShops.length; i++) {
-              this.dropShopMarker({ "lat": this.nearbyShops[i].latitude, "lng": this.nearbyShops[i].longitude }, this.nearbyShops[i]);
-            }
+            this.renderShops(res);
           }
         );
       }
     );
 
     this.mapService.onSearch.subscribe(
-      ({ filter, query }) => {
-        return this.places(filter, query);
+      (query) => {
+        this.searchPlaces(query);
+      }
+    )
+    this.mapService.onLoadedShops.subscribe(
+      (response) => {
+        this.renderShops(response);
       }
     );
-
   }
 
   public ngOnInit() {
@@ -65,7 +63,6 @@ export class MapComponent implements OnInit {
   }
 
   public ngAfterViewInit() {
-    //console.log("afterview");
     let defaultLayers = this.platform.createDefaultLayers();
     this.map = new H.Map(
       this.mapElement.nativeElement,
@@ -81,56 +78,37 @@ export class MapComponent implements OnInit {
     //nearby shops details load when current location is now known
     this.shopService.getShops().subscribe(
       (res) => {
-        this.nearbyShops = res;
-        //console.log(this.nearbyShops[0].id);
-        for (let i = 0; i < this.nearbyShops.length; i++) {
-          this.dropShopMarker({ "lat": this.nearbyShops[i].latitude, "lng": this.nearbyShops[i].longitude }, this.nearbyShops[i]);
-        }
+        this.renderShops(res);
       }
     );
   }
 
-  public places(filter: string, query: string) {
-    this.map.removeObjects(this.map.getObjects());
-    //console.log(filter+query);
 
+  public searchPlaces(query: string) {
+    this.search.request(
+      { "q": query, "at": this.mapService.lat + "," + this.mapService.lng },
+      {},
+      (data) => {
+        this.mapService.onLoadedPlaces.emit(data);
+        this.map.removeObjects(this.map.getObjects());
+        if (this.isCurrentLocation === 1) {
+          this.dropCurrentLocationMarker({ lat: this.mapService.lat, lng: this.mapService.lng }, "Your Location... Mate");
+        }
+        for (let i = 0; i < data.results.items.length; i++) {
+          this.dropMarker({ "lat": data.results.items[i].position[0], "lng": data.results.items[i].position[1] }, data.results.items[i]);
+        }
+      },
+      (error) => console.error(error)
+    );
+  }
+
+  public renderShops(shops) {
+    this.map.removeObjects(this.map.getObjects());
     if (this.isCurrentLocation === 1) {
       this.dropCurrentLocationMarker({ lat: this.mapService.lat, lng: this.mapService.lng }, "Your Location... Mate");
     }
-
-    if (filter.match('Shops')) {
-
-      //nearby shops details load with name and current location
-      this.shopService.getShopsByName(query).subscribe(
-        (res) => {
-          this.nearbyShops = res;
-          //console.log(res);
-          this.mapService.onLoaded.emit(res);
-          for (let i = 0; i < this.nearbyShops.length; i++) {
-            this.dropShopMarker({ "lat": this.nearbyShops[i].latitude, "lng": this.nearbyShops[i].longitude }, this.nearbyShops[i]);
-          }
-          this.mapService.onLoaded.complete();
-        }
-      );
-
-    }
-
-
-    if (filter.match('Filters')) {
-
-      this.search.request(
-        { "q": query, "at": this.mapService.lat + "," + this.mapService.lng },
-        {},
-        (data) => {
-          this.mapService.onLoaded.emit(data.results.items);
-          for (let i = 0; i < data.results.items.length; i++) {
-            this.dropMarker({ "lat": data.results.items[i].position[0], "lng": data.results.items[i].position[1] }, data.results.items[i]);
-          }
-          this.mapService.onLoaded.complete();
-        },
-        (error) => {
-          console.error(error);
-        });
+    for (let i = 0; i < shops.length; i++) {
+      this.dropShopMarker({ "lat": shops[i].latitude, "lng": shops[i].longitude }, shops[i]);
     }
   }
 
@@ -163,7 +141,6 @@ export class MapComponent implements OnInit {
   }
 
   private dropShopMarker(coordinates: any, data: any) {
-
     var pngIcon = new H.map.Icon("https://cdn3.iconfinder.com/data/icons/map-locations-flat-pixel-perfect/64/pin-map-location-11-512.png", { size: { w: 40, h: 40 } });
     let marker = new H.map.Marker(coordinates,
       {

@@ -12,8 +12,10 @@ export class HomeComponent implements OnInit {
 
   constructor(private mapService: MapService) {
     //marcus hill(dick) location
-    this.mapService.lat = "-38.2593118";
-    this.mapService.lng = "144.5779386";
+    // this.mapService.lat = "-38.2593118";
+    // this.mapService.lng = "144.5779386";
+    this.mapService.lat = "22.49";
+    this.mapService.lng = "88.31";
     this.getLocation();
   }
 
@@ -26,7 +28,7 @@ export class HomeComponent implements OnInit {
           this.mapService.onCurrentLocation.emit();
         }
       },
-        (error: PositionError) => console.log(error));
+        (error: PositionError) => {});
     } else {
       alert("Geolocation is not supported by this browser.");
     }

@@ -12,6 +12,6 @@ export class MapService {
 
   onCurrentLocation = new EventEmitter<{}>();
   onSearch = new EventEmitter<any>();
-  onLoaded = new EventEmitter<any>();
-
+  onLoadedShops = new EventEmitter<any>();
+  onLoadedPlaces = new EventEmitter<any>();
 }

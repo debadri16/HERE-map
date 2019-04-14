@@ -3,17 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ListComponent } from './home/list/list.component';
 import { OtherComponent } from './other/other.component';
-import { MapResolver } from './home/map/map-resolver.service';
 
 const routes: Routes = [
   {
     path: '', component: HomeComponent, children: [
-      {
-        path: 'search/:filter/:query', component: ListComponent, resolve: {places: MapResolver}
-      }
+      { path: 'search/:query', component: ListComponent }
     ]
   },
-  { path: 'other', component: OtherComponent }
+  { path: 'other', component: OtherComponent },
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

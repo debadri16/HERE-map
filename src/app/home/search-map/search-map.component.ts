@@ -10,17 +10,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class SearchMapComponent implements OnInit {
 
   query: string;
-  public selectedFilter: string = "Filters";
+  public selectedFilter: string = "none";
 
 
   constructor(private mapService: MapService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
-  }
-
-  //location search bar
-  onClickSearch(query) {
-    this.router.navigate(['/search',this.selectedFilter,query]);
   }
 
   //filters
