@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-items',
@@ -7,9 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ItemsComponent implements OnInit {
 
+  @Input() data : any;
+
+  public title : any;
+
   constructor() { }
 
   ngOnInit() {
+    console.log(this.data);
+
+    this.title = this.data['name'];
   }
 
 }

@@ -1,4 +1,4 @@
-<app-loading-spinner *ngIf="!loaded"></app-loading-spinner>
+<app-loading-spinner *ngIf="spinner"></app-loading-spinner>
 <div class="row list" *ngIf="loaded">
   <div>
     <div class="card" style="background-color:aqua">
@@ -6,7 +6,7 @@
         <i class="fas fa-times-circle pull-right" style="padding-top:5px;">
         </i>
       </button>
-      <app-items *ngFor="let item of items"></app-items>
+      <app-items *ngFor="let item of items" [data] = "item"></app-items>
     </div>
   </div>
 </div>
