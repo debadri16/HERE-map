@@ -12,6 +12,7 @@ export class ListComponent implements OnInit {
 
   items: any;
   loaded = false;
+  spinner = true;
   constructor(private ngZone: NgZone, private router: Router, private shopsService: ShopsService, private mapService: MapService, private route: ActivatedRoute) {
   }
 
@@ -29,13 +30,19 @@ export class ListComponent implements OnInit {
   }
 
   onURLChange(query: string, filter: string) {
+    this.spinner = true;
     this.loaded = false;
     if (filter === 'Shops') {
       this.shopsService.getShopsByName(query).subscribe(
         (response) => {
           this.items = response;
           this.mapService.onLoadedShops.emit(response);
-          this.loaded = true;
+          if (this.items.length === 0)
+            console.log('No results found');
+          else
+            this.loaded = true;
+            //console.log(this.items);
+          this.spinner = false;
         }
       );
     } else if (filter === 'none') {
@@ -45,7 +52,12 @@ export class ListComponent implements OnInit {
           this.ngZone.run(
             () => {
               this.items = response.results.items;
-              this.loaded = true;
+              if (this.items.length === 0)
+                console.log('No results found');
+              else
+                this.loaded = true;
+                //console.log(this.items);
+              this.spinner = false;
             }
           )
         }
