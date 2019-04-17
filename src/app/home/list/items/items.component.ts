@@ -14,9 +14,9 @@ export class ItemsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.data);
+//    console.log(this.data);
 
-    this.title = this.data['name'];
+//    this.title = this.data['name'];
   }
 
 }

@@ -56,7 +56,7 @@ export class ListComponent implements OnInit {
                 console.log('No results found');
               else
                 this.loaded = true;
-                //console.log(this.items);
+                console.log(this.items);
               this.spinner = false;
             }
           )
@@ -64,5 +64,4 @@ export class ListComponent implements OnInit {
       );
     }
   }
-
 }
