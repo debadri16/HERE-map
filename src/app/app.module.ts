@@ -15,6 +15,7 @@ import { ListComponent } from './home/list/list.component';
 import { ItemsComponent } from './home/list/items/items.component';
 import { OtherComponent } from './other/other.component';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { AddshopComponent } from './addshop/addshop.component';
 
 @NgModule({
     declarations: [
@@ -26,7 +27,8 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
         ListComponent,
         ItemsComponent,
         OtherComponent,
-        LoadingSpinnerComponent
+        LoadingSpinnerComponent,
+        AddshopComponent
     ],
     imports: [
         BrowserModule,
