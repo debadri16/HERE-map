@@ -14,7 +14,10 @@ export class MapComponent implements OnInit {
   private ui: any;
   private search: any;
   platform: any;
-  map: any;
+  public map: any;
+
+  public click_lat: any;
+  public click_lng: any;
 
   //if current location access is granted
   private isCurrentLocation = 0;
@@ -46,12 +49,17 @@ export class MapComponent implements OnInit {
       (query) => {
         this.searchPlaces(query);
       }
-    )
+    );
     this.mapService.onLoadedShops.subscribe(
       (response) => {
         this.renderShops(response);
       }
     );
+
+    this.mapService.onPickLocation.subscribe(() => {
+      this.setUpClickListener(this.map, this.ui, this.mapService);
+    });
+
   }
 
   public ngOnInit() {
@@ -81,6 +89,7 @@ export class MapComponent implements OnInit {
         this.renderShops(res);
       }
     );
+
   }
 
 
@@ -155,4 +164,39 @@ export class MapComponent implements OnInit {
     }, false);
     this.map.addObject(marker);
   }
+
+  public setUpClickListener(map, ui, mapService) {
+    // Attach an event listener to map display
+    // obtain the coordinates and display.
+
+    map.addEventListener('tap', function (evt) {
+      map.removeObjects(map.getObjects());
+      var coord = map.screenToGeo(evt.currentPointer.viewportX,
+        evt.currentPointer.viewportY);
+      this.click_lat = coord.lat;
+      this.click_lng = coord.lng;
+
+      mapService.afterPickLocation.emit(coord);
+      
+      // console.log(this.click_lat + " " + this.click_lng);
+
+      var pngIcon = new H.map.Icon("https://cdn.iconscout.com/icon/premium/png-256-thumb/location-pin-257-723628.png", { size: { w: 40, h: 40 } });
+      let marker = new H.map.Marker(coord,
+        {
+          icon: pngIcon
+        });
+      marker.setData("<p>Dropped pin</p>");
+      marker.addEventListener('pointerenter', event => {
+        let bubble = new H.ui.InfoBubble(event.target.getPosition(), {
+          content: event.target.getData()
+        });
+        ui.addBubble(bubble);
+      }, false);
+      marker.addEventListener('pointerleave', event => {
+        ui.getBubbles().forEach(bub => ui.removeBubble(bub));
+      }, false);
+      map.addObject(marker);
+    });
+  }
+
 }

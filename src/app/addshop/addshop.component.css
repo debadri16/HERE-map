@@ -1,9 +1,16 @@
-.row {
+#rowmain {
     margin-top: 10px;
     opacity: .9;
     overflow-y: hidden;
     width: 35%;
   }
+
+  /* #pick-icon{
+    position: fixed;
+    z-index: 0;
+    margin-top: 20%;
+    margin-left: 50%;
+  } */
   
   #list {
     max-height: 80vh;
