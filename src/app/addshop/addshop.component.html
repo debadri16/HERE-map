@@ -16,25 +16,35 @@
           <!-- <img class="card-img-top" src="https://s3-eu-west-1.amazonaws.com/eu-static.bullring.co.uk/Live/ResizedImages/storefronts/n1a5qyfgdvh/Gallery_Image/thefragrenceshop.jpg" alt="Card image"> -->
           <div class="card-body">
             <h5 class="card-text">Shop name</h5>
-            <input class="form-control" type="text" placeholder="Add a shop title..." />
+            <input class="form-control" type="text" placeholder="Add a shop title..." [(ngModel)]="title" />
             <h5 class="card-text">Type</h5>
-            <input class="form-control" type="text" placeholder="Type of the shop..." />
+            <input class="form-control" type="text" placeholder="Type of the shop..." [(ngModel)]="type" />
             <h5 class="card-text">Contact number</h5>
-            <input class="form-control" type="text" placeholder="Phone number of owner..." />
+            <input class="form-control" type="text" placeholder="Phone number of owner..." [(ngModel)]="phn" />
             <h5 class="card-text">Location</h5>
             <div class="row">
               <div class="col-md-4">
-                <input class="form-control" type="text" placeholder="{{lat}}">
+                <input class="form-control" type="text" placeholder="latitude" [(ngModel)]="lat">
               </div>
               <div class="col-md-4">
-                <input class="form-control" type="text" placeholder="{{lng}}">
+                <input class="form-control" type="text" placeholder="longitude" [(ngModel)]="lng">
               </div>
               <div class="col-md-4">
-                <button class="btn btn-warning" (click)="onPickLocationEvent()"><i class="far fa-compass"></i></button>
+                <button *ngIf="!markerp" data-toggle="tooltip" title="Click to pick location" class="btn btn-warning" (click)="onPickLocationEvent()"><i class="far fa-compass"></i></button>
+                <button *ngIf="markerp" class="btn btn-danger" (click)="onCancelEvent()"><i class="far fa-times-circle"></i></button>
               </div>
             </div>
-            <h6>click on the black spot after setting correctly</h6>
-            <br><button class="btn btn-primary">Add</button>
+            <p *ngIf="markerp">Click on map to place marker</p>
+            <br *ngIf="!markerp">
+            <div class="row">
+              <div class="col-md-4">
+                  <button class="btn btn-block btn-info" (click)="addShop()">Add</button>
+              </div>
+              <div class="col-md-4"></div>
+              <div class="col-md-4">
+                <button class="btn btn-block btn-success" (click)="resetShop()">Reset</button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -42,6 +52,12 @@
     </div>
   </div>
 </div>
+
+<script>
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+  });
+</script>
 
 <!-- <div id="pick-icon">
   <button class="btn">

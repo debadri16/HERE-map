@@ -19,6 +19,8 @@ export class MapComponent implements OnInit {
   public click_lat: any;
   public click_lng: any;
 
+  public f: any;
+
   //if current location access is granted
   private isCurrentLocation = 0;
 
@@ -58,6 +60,10 @@ export class MapComponent implements OnInit {
 
     this.mapService.onPickLocation.subscribe(() => {
       this.setUpClickListener(this.map, this.ui, this.mapService);
+    });
+
+    this.mapService.onCancelPickLocation.subscribe(() => {
+      this.closeClickListener(this.map);
     });
 
   }
@@ -169,7 +175,7 @@ export class MapComponent implements OnInit {
     // Attach an event listener to map display
     // obtain the coordinates and display.
 
-    map.addEventListener('tap', function (evt) {
+    map.addEventListener('tap', this.f = function (evt) {
       map.removeObjects(map.getObjects());
       var coord = map.screenToGeo(evt.currentPointer.viewportX,
         evt.currentPointer.viewportY);
@@ -177,7 +183,7 @@ export class MapComponent implements OnInit {
       this.click_lng = coord.lng;
 
       mapService.afterPickLocation.emit(coord);
-      
+
       // console.log(this.click_lat + " " + this.click_lng);
 
       var pngIcon = new H.map.Icon("https://cdn.iconscout.com/icon/premium/png-256-thumb/location-pin-257-723628.png", { size: { w: 40, h: 40 } });
@@ -197,6 +203,13 @@ export class MapComponent implements OnInit {
       }, false);
       map.addObject(marker);
     });
+  }
+
+  public closeClickListener(map){
+
+    map.removeObjects(map.getObjects());
+    map.removeEventListener('tap',this.f);
+
   }
 
 }

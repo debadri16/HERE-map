@@ -16,4 +16,5 @@ export class MapService {
   onLoadedPlaces = new EventEmitter<any>();
   onPickLocation = new EventEmitter();
   afterPickLocation = new EventEmitter<any>();
+  onCancelPickLocation = new EventEmitter();
 }
