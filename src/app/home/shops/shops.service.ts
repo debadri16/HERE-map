@@ -29,4 +29,10 @@ export class ShopsService {
     //console.log('service log ' + this.mapService.lat + " " + this.mapService.lng);
     return this.http.get(getShopsByNameURL);
   }
+
+  addShop(shop: any): Observable<any>{
+    let addShopUrl = 'http://localhost:8080/shop/add';
+
+    return this.http.post(addShopUrl,shop);
+  }
 }
